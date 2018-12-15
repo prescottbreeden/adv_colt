@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jasmine Tests</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.css">
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine-html.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/boot.js"></script>
+</body>
+<script>
+
+  function add(a,b,c) {
+    return a+b+c;
+  }
+
+  describe("add", function() {
+    var addSpy, result;
+    beforeEach(function() {
+      addSpy = spyOn(window, 'add').and.callThrough();
+      result = addSpy(1,2,3);
+    })
+    it("it can have params tested", function() {
+      expect(addSpy).toHaveBeenCalled();
+      expect(addSpy).toHaveBeenCalledWith(1,2,3);
+      expect(addSpy.calls.any()).toBe(true);
+      expect(addSpy.calls.count()).toBe(1);
+      expect(result).toEqual(6);
+    })
+  })
+
+</script>
+</html>

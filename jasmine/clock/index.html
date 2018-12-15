@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jasmine Tests</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.css">
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/jasmine-html.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.6.2/boot.js"></script>
+</body>
+<script>
+
+/*
+
+  function getUserInfo(username) {
+    return $.getJSON('https://api.github.com/users/' + username);
+  }
+
+  describe("#getUserInfo", function() {
+    it("returns the correct name for the user", function(done) {
+      getUserInfo('elie').then(function(data) {
+        expect(data.name).toBe('Elie Schoppik')
+        done();
+      })
+    })
+  })
+
+*/
+
+  describe("a simple setTimeout", function() {
+    var simple;
+    beforeEach(function() {
+      sample = jasmine.createSpy("sampleFunction");
+      jasmine.clock().install();
+    })
+    afterEach(function() {
+      jasmine.clock().uninstall();
+    })
+    it("is only invoked after 1000 milliseconds", function() {
+      setTimeout(function() {
+        sample();
+      }, 1000);
+      jasmine.clock().tick(999);
+      expect(sample).not.toHaveBeenCalled();
+      jasmine.clock().tick(1);
+      expect(sample).toHaveBeenCalled();
+    })
+  }) 
+
+  describe("a simple setInterval", function() {
+    var dummyFunction;
+    beforeEach(function() {
+      dummyFunction = jasmine.createSpy("dummyFunction");
+      jasmine.clock().install();
+    })
+    afterEach(function() {
+      jasmine.clock().uninstall();
+    })
+    it("is only invoked every 1000 milliseconds", function() {
+      setInterval(function() {
+        dummyFunction();
+      }, 1000);
+      jasmine.clock().tick(999);
+      expect(dummyFunction.calls.count()).toBe(0);
+      jasmine.clock().tick(1000);
+      expect(dummyFunction.calls.count()).toBe(1);
+      jasmine.clock().tick(1);
+      expect(dummyFunction.calls.count()).toBe(2);
+    })
+  })
+
+
+
+</script>
+</html>
